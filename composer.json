@@ -1,0 +1,19 @@
+{
+    "name": "shootproof/php-sdk",
+    "homepage": "http://www.shootproof.com/",
+    "description": "The API comes free of charge with your ShootProof account and currently is only available in the form of JSON responses. Read up on the API documentation to discover the different methods that are available.",
+    "keywords": ["shootproof"],
+    "type": "library",
+    "authors": [
+        {
+            "name": "ShootProof",
+            "homepage": "http://developer.shootproof.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "classmap": ["lib/"]
+    }
+}
