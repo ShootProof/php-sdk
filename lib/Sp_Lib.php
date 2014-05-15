@@ -57,6 +57,11 @@ class Sp_Lib
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
+    if (stripos(php_uname('s'),'Darwin') !== false) {
+      curl_setopt($curl, CURLOPT_SSLVERSION, 3);
+      curl_setopt($curl, CURLOPT_SSL_CIPHER_LIST, 'SSLv3');
+    }
+
 		// the API response
 		$response = curl_exec($curl);
         $info = curl_getinfo($curl);
