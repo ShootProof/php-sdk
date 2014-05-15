@@ -159,7 +159,8 @@ class Sp_Auth extends Sp_Lib
     {
         $params = array(
             'refresh_token' => $refreshToken,
-            'grant_type' => 'refresh_token'
+            'grant_type' => 'refresh_token',
+            'scope' => $this->_getScope()
         );
 
         return $this->_makeRequest($this->_tokenEndPoint, $params);
