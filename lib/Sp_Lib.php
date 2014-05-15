@@ -14,20 +14,20 @@ class Sp_Lib
 	 */
 	protected $_version = 'php-1.5.0';
 
-    /**
-    * Wrapper method to make an api request
-    *
-    * @param $code auth code
-    * @return json response with access/refresh token
-    */
-    protected function _makeApiRequest($params, $photos = array())
-    {
-        $token = array('access_token' => $this->_getAccessToken());
+  /**
+   * Wrapper method to make an api request
+   *
+   * @param $code auth code
+   * @return json response with access/refresh token
+   */
+  protected function _makeApiRequest($params, $photos = array())
+  {
+    $token = array('access_token' => $this->_getAccessToken());
 
-        $params = array_merge($params, $token);
+    $params = array_merge($params, $token);
 
-        return $this->_makeRequest($this->_baseEndPoint, $params, $photos);
-    }
+    return $this->_makeRequest($this->_baseEndPoint, $params, $photos);
+  }
 
 	/**
 	 * Method to make the request to the API
@@ -59,10 +59,10 @@ class Sp_Lib
 
 		// the API response
 		$response = curl_exec($curl);
-        $info = curl_getinfo($curl);
+    $info = curl_getinfo($curl);
 
 		if (!$response) {
-            throw new Exception('The API did not return any response. Error #' . $info['http_code']);
+      throw new Exception('The API did not return any response. Error #' . $info['http_code']);
 		}
 
 		$json = json_decode($response, true);
@@ -74,22 +74,23 @@ class Sp_Lib
 		return $json;
 	}
 
-    /**
-    * Build the URL for given path and parameters.
-    *
-    * @param $path
-    *   (optional) The path.
-    * @param $params
-    *   (optional) The query parameters in associative array.
-    *
-    * @return
-    *   The URL for the given parameters.
-    */
-    protected function _getUri($path = '', $params = array()) {
-        $url = $path;
-        $url .= '?' . http_build_query($params, NULL, '&');
-        return $url;
-    }
+  /**
+   * Build the URL for given path and parameters.
+   *
+   * @param $path
+   *   (optional) The path.
+   * @param $params
+   *   (optional) The query parameters in associative array.
+   *
+   * @return
+   *   The URL for the given parameters.
+   */
+  protected function _getUri($path = '', $params = array())
+  {
+    $url = $path;
+    $url .= '?' . http_build_query($params, NULL, '&');
+    return $url;
+  }
 }
 
 
