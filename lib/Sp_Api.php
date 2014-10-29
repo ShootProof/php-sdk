@@ -474,9 +474,10 @@ class Sp_Api extends Sp_Lib
      * that brand will be returned.
      *
      * @param integer $brandId Brand ID to lookup by; optional.
+     * @param integer $page
      * @return array
      */
-    public function getMobileApps($brandId = null)
+    public function getMobileApps($brandId = null, $page = 1)
     {
         $params = array(
             'method' => 'sp.mobile_app.get_list'
