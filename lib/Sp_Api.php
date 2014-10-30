@@ -506,6 +506,36 @@ class Sp_Api extends Sp_Lib
         return $this->_makeApiRequest($params);
     }
 
+    /**
+     * Method to return all active brands for a studio.
+     * 
+     * @return array
+     */
+    public function getBrands()
+    {
+        $params = array(
+            'method' => 'sp.brand.get_list'
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to return data on a single brand.
+     * 
+     * @param integer $brandId Brand ID to retrieve for.
+     * @return array
+     */
+    public function getBrandInfo($brandId)
+    {
+        $params = array(
+            'method' => 'sp.brand.info',
+            'brand_id' => $brandId
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
 	/**
 	 * Method to get the accessToken
 	 *
