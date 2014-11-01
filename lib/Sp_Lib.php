@@ -64,16 +64,22 @@ class Sp_Lib
 
 		// the API response
 		$response = curl_exec($curl);
-        $info = curl_getinfo($curl);
+		$info = curl_getinfo($curl);
+		$error = curl_error($curl);
+		$errno = curl_errno($curl);
 
+		if ($error) {
+			throw new Sp_CurlException($error, $errno);
+		}
+		
 		if (!$response) {
-            throw new Exception('The API did not return any response. Error #' . $info['http_code']);
+			throw new Sp_NoResponseException('The API did not return any response. Error #' . $info['http_code']);
 		}
 
 		$json = json_decode($response, true);
 
 		if ($json['stat'] != 'ok') {
-			throw new Exception('The API did not return an OK response. ' . $json['msg']);
+			throw new Sp_Exception('The API did not return an OK response. ' . $json['msg']);
 		}
 
 		return $json;
