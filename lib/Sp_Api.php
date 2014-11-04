@@ -96,12 +96,16 @@ class Sp_Api extends Sp_Lib
     }
 
     /**
-     * Method to create a new event
+     * Method to create a new event.
+     *
+     * If no $brandId is provided, the event will be placed within the
+     * studio's default brand.
      *
      * @param string $eventName
+     * @param integer $brandId Brand ID to create event in; optional.
      * @return array
      */
-    public function createEvent($eventName)
+    public function createEvent($eventName, $brandId = null)
     {
         if (is_null($eventName) || $eventName == '') {
             throw new Exception('The eventName is required to create a new event.');
@@ -111,6 +115,10 @@ class Sp_Api extends Sp_Lib
             'method' => 'sp.event.create',
             'event_name' => $eventName
         );
+
+        if (strlen($brandId) > 0) {
+            $params['brand_id'] = $brandId;
+        }
 
         return $this->_makeApiRequest($params);
     }
