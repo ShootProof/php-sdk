@@ -79,13 +79,18 @@ class Sp_Api extends Sp_Lib
 	/**
 	 * Method to return all the open events for a studio
 	 *
+     * @param integer $brandId Brand ID to retrieve for.
 	 * @return array
 	 */
-	public function getEvents()
+    public function getEvents($brandId = null)
 	{
 		$params = array(
 			'method' => 'sp.event.get_list'
 		);
+
+        if (strlen($brandId) > 0) {
+            $params['brand_id'] = $brandId;
+        }
 
 		return $this->_makeApiRequest($params);
 	}
