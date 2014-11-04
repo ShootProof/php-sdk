@@ -480,7 +480,8 @@ class Sp_Api extends Sp_Lib
     public function getMobileApps($brandId = null, $page = 1)
     {
         $params = array(
-            'method' => 'sp.mobile_app.get_list'
+            'method' => 'sp.mobile_app.get_list',
+            'page' => $page
         );
 
         if (strlen($brandId) > 0) {
