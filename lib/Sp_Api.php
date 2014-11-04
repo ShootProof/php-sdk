@@ -466,6 +466,47 @@ class Sp_Api extends Sp_Lib
 		return $this->_makeApiRequest($params);
 	}
 
+    /**
+     * Method to return all active mobile apps for a studio or brand.
+     *
+     * If no brand ID is provided, all mobile apps for the studio will be
+     * returned.  If a brand ID is provided, then only mobile apps within
+     * that brand will be returned.
+     *
+     * @param integer $brandId Brand ID to lookup by; optional.
+     * @param integer $page
+     * @return array
+     */
+    public function getMobileApps($brandId = null, $page = 1)
+    {
+        $params = array(
+            'method' => 'sp.mobile_app.get_list',
+            'page' => $page
+        );
+
+        if (strlen($brandId) > 0) {
+            $params['brand_id'] = $brandId;
+        }
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to get the photos for a mobile app.
+     *
+     * @param integer $mobileAppId
+     * @return array
+     */
+    public function getMobileAppPhotos($mobileAppId)
+    {
+        $params = array(
+            'method' => 'sp.mobile_app.get_photos',
+            'mobile_app_id' => $mobileAppId
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
 	/**
 	 * Method to get the accessToken
 	 *
