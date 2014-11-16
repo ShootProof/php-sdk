@@ -14,20 +14,20 @@ class Sp_Lib
 	 */
 	protected $_version = 'php-1.5.0';
 
-    /**
-    * Wrapper method to make an api request
-    *
-    * @param $code auth code
-    * @return json response with access/refresh token
-    */
-    protected function _makeApiRequest($params, $photos = array())
-    {
-        $token = array('access_token' => $this->_getAccessToken());
+	/**
+	 * Wrapper method to make an api request
+	 *
+	 * @param $code auth code
+	 * @return json response with access/refresh token
+	 */
+	protected function _makeApiRequest($params, $photos = array())
+	{
+		$token = array('access_token' => $this->_getAccessToken());
 
-        $params = array_merge($params, $token);
+		$params = array_merge($params, $token);
 
-        return $this->_makeRequest($this->_baseEndPoint, $params, $photos);
-    }
+		return $this->_makeRequest($this->_baseEndPoint, $params, $photos);
+	}
 
 	/**
 	 * Method to make the request to the API
@@ -57,44 +57,45 @@ class Sp_Lib
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-    if (stripos(PHP_OS, 'Darwin') !== false) {
-      curl_setopt($curl, CURLOPT_SSLVERSION, 3);
-      curl_setopt($curl, CURLOPT_SSL_CIPHER_LIST, 'SSLv3');
-    }
-
 		// the API response
 		$response = curl_exec($curl);
-        $info = curl_getinfo($curl);
+		$info = curl_getinfo($curl);
+		$error = curl_error($curl);
+		$errno = curl_errno($curl);
 
+		if ($error) {
+			throw new Sp_CurlException($error, $errno);
+		}
+		
 		if (!$response) {
-            throw new Exception('The API did not return any response. Error #' . $info['http_code']);
+			throw new Sp_NoResponseException('The API did not return any response. Error #' . $info['http_code']);
 		}
 
 		$json = json_decode($response, true);
 
 		if ($json['stat'] != 'ok') {
-			throw new Exception('The API did not return an OK response. ' . $json['msg']);
+			throw new Sp_Exception('The API did not return an OK response. ' . $json['msg']);
 		}
 
 		return $json;
 	}
 
-    /**
-    * Build the URL for given path and parameters.
-    *
-    * @param $path
-    *   (optional) The path.
-    * @param $params
-    *   (optional) The query parameters in associative array.
-    *
-    * @return
-    *   The URL for the given parameters.
-    */
-    protected function _getUri($path = '', $params = array()) {
-        $url = $path;
-        $url .= '?' . http_build_query($params, NULL, '&');
-        return $url;
-    }
+	/**
+	 * Build the URL for given path and parameters.
+	 *
+	 * @param $path
+	 *   (optional) The path.
+	 * @param $params
+	 *   (optional) The query parameters in associative array.
+	 *
+	 * @return
+	 *   The URL for the given parameters.
+	 */
+	protected function _getUri($path = '', $params = array()) {
+		$url = $path;
+		$url .= '?' . http_build_query($params, NULL, '&');
+		return $url;
+	}
 }
 
 

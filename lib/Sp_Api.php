@@ -417,7 +417,7 @@ class Sp_Api extends Sp_Lib
         );
 
         $photos = array(
-            'photo' => '@' . $filepath,
+            'photo' => new CURLFile($filepath),
         );
 
         return $this->_makeApiRequest($params, $photos);
