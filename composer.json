@@ -1,20 +1,30 @@
 {
     "name": "shootproof/php-sdk",
-    "homepage": "http://www.shootproof.com/",
+    "homepage": "http://developer.shootproof.com",
     "description": "The API comes free of charge with your ShootProof account and currently is only available in the form of JSON responses. Read up on the API documentation to discover the different methods that are available.",
-    "keywords": ["shootproof"],
+    "keywords": ["shootproof", "api", "sdk", "photography", "photo"],
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "ShootProof",
-            "homepage": "http://developer.shootproof.com/"
+            "homepage": "http://developer.shootproof.com"
         }
     ],
+    "support": {
+        "email": "support@shootproof.com",
+        "issues": "https://github.com/ShootProof/php-sdk/issues",
+        "source": "https://github.com/ShootProof/php-sdk"
+    },
     "require": {
         "php": ">=5.3.3"
     },
     "autoload": {
         "classmap": ["lib/"]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
     }
 }
