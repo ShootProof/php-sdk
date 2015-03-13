@@ -522,7 +522,7 @@ class Sp_Api extends Sp_Lib
 
     /**
      * Method to return all active brands for a studio.
-     * 
+     *
      * @return array
      */
     public function getBrands()
@@ -536,7 +536,7 @@ class Sp_Api extends Sp_Lib
 
     /**
      * Method to return data on a single brand.
-     * 
+     *
      * @param integer $brandId Brand ID to retrieve for.
      * @return array
      */
@@ -545,6 +545,67 @@ class Sp_Api extends Sp_Lib
         $params = array(
             'method' => 'sp.brand.info',
             'brand_id' => $brandId
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to return data on a single contact.
+     *
+     * @param integer $contactId Contact ID to retrieve for.
+     * @return array
+     */
+    public function getContactInfo($contactId)
+    {
+        $params = array(
+            'method' => 'sp.contact.info',
+            'contact_id' => $contactId
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to create a new contact.
+     *
+     * Supported key-value pairs:
+     *
+     *     brand_id
+     *     first_name (required)
+     *     last_name
+     *     email (required)
+     *     phone
+     *     business_name
+     *     notes
+     *     tags (array of strings)
+     *     address (associative array)
+     *         address_1
+     *         address_2
+     *         city
+     *         state
+     *         state_other
+     *         country (required if address is provided)
+     *         zip_postal
+     *
+     * @param array $contactData Associative array of contact data.
+     * @return array
+     */
+    public function createContact(array $contactData)
+    {
+        if (!array_key_exists('first_name', $contactData) ||
+            !array_key_exists('email', $contactData)
+        ) {
+            throw new Exception(
+                'Both first_name and email values are required.'
+            );
+        }
+
+        $params = array_merge(
+            array(
+                'method' => 'sp.contact.create'
+            ),
+            $contactData
         );
 
         return $this->_makeApiRequest($params);
