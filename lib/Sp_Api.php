@@ -593,19 +593,69 @@ class Sp_Api extends Sp_Lib
      */
     public function createContact(array $contactData)
     {
-        if (!array_key_exists('first_name', $contactData) ||
-            !array_key_exists('email', $contactData)
-        ) {
-            throw new Exception(
-                'Both first_name and email values are required.'
-            );
-        }
-
         $params = array_merge(
             array(
                 'method' => 'sp.contact.create'
             ),
             $contactData
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to update a new contact.
+     *
+     * Supported key-value pairs:
+     *
+     *     brand_id
+     *     first_name (required)
+     *     last_name
+     *     email (required)
+     *     phone
+     *     business_name
+     *     notes
+     *     tags (array of strings)
+     *     address (associative array, or null to remove)
+     *         address_1
+     *         address_2
+     *         city
+     *         state
+     *         state_other
+     *         country (required if address is provided)
+     *         zip_postal
+     *
+     * @param array $contactData Associative array of contact data.
+     * @return array
+     */
+    public function updateContact($contactId, array $contactData)
+    {
+        $params = array_merge(
+            array(
+                'method' => 'sp.contact.create',
+                'contact_id' => $contactId
+            ),
+            $contactData
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to delete a contact.
+     *
+     * @param integer $contactId
+     * @return array
+     */
+    public function deleteContact($contactId)
+    {
+        if (is_null($contactId) || $contactId == '') {
+            throw new Exception('The contactId is required to delete a contact.');
+        }
+
+        $params = array(
+            'method' => 'sp.contact.delete',
+            'contact_id' => $contactId
         );
 
         return $this->_makeApiRequest($params);
