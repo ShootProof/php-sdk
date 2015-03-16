@@ -43,6 +43,14 @@ class Sp_Lib
 			$params = array_merge($params, $photos);
 		}
 
+        foreach ($params as $key => $value) {
+            if (is_array($value)) {
+                $flattened = array();
+                $params = $this->_flattenMultiDimensionalParams($params, $flattened);
+                $params = $flattened;
+            }
+        }
+
 		// send along some headers for reporting
 		$headers = array(
 			'X-WRAPPER: ' . $this->_version
@@ -100,6 +108,29 @@ class Sp_Lib
 		$url .= '?' . http_build_query($params, NULL, '&');
 		return $url;
 	}
+
+    /**
+     * Adapted from http://stackoverflow.com/a/8224117
+     *
+     * @param array $arrays Source array.
+     * @param array $new Array for modified arrays, by reference.
+     * @param string $prefix Field prefix; optional.
+     * @return void
+     */
+    protected function _flattenMultiDimensionalParams($arrays, &$new = array(), $prefix = null)
+    {
+        if (is_object($arrays)) {
+            $arrays = get_object_vars( $arrays );
+        }
+
+        foreach ($arrays as $key => $value) {
+            $k = isset( $prefix ) ? $prefix . '[' . $key . ']' : $key;
+
+            if (is_array($value) || is_object($value)) {
+                $this->_flattenMultiDimensionalParams($value, $new, $k);
+            } else {
+                $new[$k] = $value;
+            }
+        }
+    }
 }
-
-
