@@ -671,7 +671,7 @@ class Sp_Api extends Sp_Lib
     public function bulkCreateContacts(array $contacts)
     {
         $params = array(
-            'method' => 'sp.contact.bulk_create'
+            'method' => 'sp.contact.bulk_create',
             'contacts' => $contacts
         );
 
