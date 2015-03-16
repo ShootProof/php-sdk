@@ -642,6 +642,43 @@ class Sp_Api extends Sp_Lib
     }
 
     /**
+     * Method to create a multiple contacts in bulk.
+     *
+     * Must be an array of associative arrays.  The same key-value pauirs
+     * in Sp_Api::createContact() are supported in the inner associative arrays.
+     * Supported key-value pairs:
+     *
+     *     brand_id
+     *     first_name (required)
+     *     last_name
+     *     email (required)
+     *     phone
+     *     business_name
+     *     notes
+     *     tags (array of strings)
+     *     address (associative array)
+     *         address_1
+     *         address_2
+     *         city
+     *         state
+     *         state_other
+     *         country (required if address is provided)
+     *         zip_postal
+     *
+     * @param array $contactData Array of associative arrays of contact data.
+     * @return array
+     */
+    public function bulkCreateContacts(array $contacts)
+    {
+        $params = array(
+            'method' => 'sp.contact.bulk_create'
+            'contacts' => $contacts
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
      * Method to delete a contact.
      *
      * @param integer $contactId
