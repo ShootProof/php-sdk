@@ -66,7 +66,7 @@ class Sp_Lib
 		if ($error) {
 			throw new Sp_CurlException($error, $errno);
 		}
-		
+
 		if (!$response) {
 			throw new Sp_NoResponseException('The API did not return any response. Error #' . $info['http_code']);
 		}
@@ -74,7 +74,11 @@ class Sp_Lib
 		$json = json_decode($response, true);
 
 		if ($json['stat'] != 'ok') {
-			throw new Sp_Exception('The API did not return an OK response. ' . $json['msg']);
+			throw new Sp_Exception(
+                'The API did not return an OK response. ' . $json['msg'],
+                0,
+                $response
+            );
 		}
 
 		return $json;
