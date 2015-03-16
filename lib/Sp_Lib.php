@@ -120,7 +120,7 @@ class Sp_Lib
     protected function _flattenMultiDimensionalParams($arrays, array &$new = array(), $prefix = null)
     {
         if (is_object($arrays)) {
-            $arrays = get_object_vars( $arrays );
+            $arrays = get_object_vars($arrays);
         }
 
         foreach ($arrays as $key => $value) {
