@@ -522,7 +522,7 @@ class Sp_Api extends Sp_Lib
 
     /**
      * Method to return all active brands for a studio.
-     * 
+     *
      * @return array
      */
     public function getBrands()
@@ -536,7 +536,7 @@ class Sp_Api extends Sp_Lib
 
     /**
      * Method to return data on a single brand.
-     * 
+     *
      * @param integer $brandId Brand ID to retrieve for.
      * @return array
      */
@@ -545,6 +545,154 @@ class Sp_Api extends Sp_Lib
         $params = array(
             'method' => 'sp.brand.info',
             'brand_id' => $brandId
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to return data on a single contact.
+     *
+     * @param integer $contactId Contact ID to retrieve for.
+     * @return array
+     */
+    public function getContactInfo($contactId)
+    {
+        $params = array(
+            'method' => 'sp.contact.info',
+            'contact_id' => $contactId
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to create a new contact.
+     *
+     * Supported key-value pairs:
+     *
+     *     brand_id
+     *     first_name (required)
+     *     last_name
+     *     email (required)
+     *     phone
+     *     business_name
+     *     notes
+     *     tags (string of tags, separated by commas)
+     *     address (associative array)
+     *         address_1
+     *         address_2
+     *         city
+     *         state
+     *         state_other
+     *         country (required if address is provided)
+     *         zip_postal
+     *
+     * @param array $contactData Associative array of contact data.
+     * @return array
+     */
+    public function createContact(array $contactData)
+    {
+        $params = array_merge(
+            array(
+                'method' => 'sp.contact.create'
+            ),
+            $contactData
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to update a new contact.
+     *
+     * Supported key-value pairs:
+     *
+     *     brand_id
+     *     first_name (required)
+     *     last_name
+     *     email (required)
+     *     phone
+     *     business_name
+     *     notes
+     *     tags (string of tags, separated by commas)
+     *     address (associative array, or null to remove)
+     *         address_1
+     *         address_2
+     *         city
+     *         state
+     *         state_other
+     *         country (required if address is provided)
+     *         zip_postal
+     *
+     * @param array $contactData Associative array of contact data.
+     * @return array
+     */
+    public function updateContact($contactId, array $contactData)
+    {
+        $params = array_merge(
+            array(
+                'method' => 'sp.contact.create',
+                'contact_id' => $contactId
+            ),
+            $contactData
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to create a multiple contacts in bulk.
+     *
+     * Must be an array of associative arrays.  The same key-value pauirs
+     * in Sp_Api::createContact() are supported in the inner associative arrays.
+     * Supported key-value pairs:
+     *
+     *     brand_id
+     *     first_name (required)
+     *     last_name
+     *     email (required)
+     *     phone
+     *     business_name
+     *     notes
+     *     tags (string of tags, separated by commas)
+     *     address (associative array)
+     *         address_1
+     *         address_2
+     *         city
+     *         state
+     *         state_other
+     *         country (required if address is provided)
+     *         zip_postal
+     *
+     * @param array $contactData Array of associative arrays of contact data.
+     * @return array
+     */
+    public function bulkCreateContacts(array $contacts)
+    {
+        $params = array(
+            'method' => 'sp.contact.bulk_create',
+            'contacts' => $contacts
+        );
+
+        return $this->_makeApiRequest($params);
+    }
+
+    /**
+     * Method to delete a contact.
+     *
+     * @param integer $contactId
+     * @return array
+     */
+    public function deleteContact($contactId)
+    {
+        if (is_null($contactId) || $contactId == '') {
+            throw new Exception('The contactId is required to delete a contact.');
+        }
+
+        $params = array(
+            'method' => 'sp.contact.delete',
+            'contact_id' => $contactId
         );
 
         return $this->_makeApiRequest($params);

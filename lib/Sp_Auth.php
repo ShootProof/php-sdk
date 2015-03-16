@@ -83,34 +83,34 @@ class Sp_Auth extends Sp_Lib
         return $this;
     }
 
-	/**
-	 * Method to get the appId
-	 *
-	 * @return string
-	 */
-	protected function _getClientId()
-	{
-		return $this->_clientId;
-	}
-
-	/**
-	 * Method to return the redirect uri
-	 *
-	 * @return string
-	 */
-	protected function _getRedirectUri()
-	{
-		return $this->_redirectUri;
+    /**
+     * Method to get the appId
+     *
+     * @return string
+     */
+    protected function _getClientId()
+    {
+        return $this->_clientId;
     }
 
-	/**
-	 * Method to return the scope
-	 *
-	 * @return string
-	 */
-	protected function _getScope()
-	{
-		return $this->_scope;
+    /**
+     * Method to return the redirect uri
+     *
+     * @return string
+     */
+    protected function _getRedirectUri()
+    {
+        return $this->_redirectUri;
+    }
+
+    /**
+     * Method to return the scope
+     *
+     * @return string
+     */
+    protected function _getScope()
+    {
+        return $this->_scope;
     }
 
     /**
