@@ -124,7 +124,10 @@ class Sp_Lib
         }
 
         foreach ($arrays as $key => $value) {
-            $k = isset( $prefix ) ? $prefix . '[' . $key . ']' : $key;
+            $k =
+                isset($prefix) ?
+                    $prefix . '[' . $key . ']' :
+                    $key;
 
             if (is_array($value) || is_object($value)) {
                 $this->_flattenMultiDimensionalParams($value, $new, $k);
