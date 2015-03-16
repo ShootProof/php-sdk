@@ -45,8 +45,7 @@ class Sp_Lib
 
         foreach ($params as $key => $value) {
             if (is_array($value)) {
-                $flattened = array();
-                $params = $this->_flattenMultiDimensionalParams($params, $flattened);
+                $flattened = $this->_flattenMultiDimensionalParams($params);
                 $params = $flattened;
             }
         }
@@ -113,12 +112,13 @@ class Sp_Lib
      * Adapted from http://stackoverflow.com/a/8224117
      *
      * @param array $arrays Source array.
-     * @param array &$new Array for modified arrays, by reference.
      * @param string $prefix Field prefix; optional.
      * @return void
      */
-    protected function _flattenMultiDimensionalParams($arrays, array &$new = array(), $prefix = null)
+    protected function _flattenMultiDimensionalParams($arrays, $prefix = null)
     {
+        $new = array();
+
         if (is_object($arrays)) {
             $arrays = get_object_vars($arrays);
         }
@@ -130,10 +130,16 @@ class Sp_Lib
                     $key;
 
             if (is_array($value) || is_object($value)) {
-                $this->_flattenMultiDimensionalParams($value, $new, $k);
+                $new =
+                    array_merge(
+                        $new,
+                        $this->_flattenMultiDimensionalParams($value, $k)
+                    );
             } else {
                 $new[$k] = $value;
             }
         }
+
+        return $new;
     }
 }
