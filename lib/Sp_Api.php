@@ -13,7 +13,7 @@ class Sp_Api extends Sp_Lib
      *
      * @var string
      */
-    protected $_baseEndPoint = 'https://api.bdeshong.shootproof.com/v2';
+    protected $_baseEndPoint = 'https://api.shootproof.com/v2';
 
     /**
      * Property to hold the access token to be used on all API requests
