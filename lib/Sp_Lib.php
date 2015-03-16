@@ -113,11 +113,11 @@ class Sp_Lib
      * Adapted from http://stackoverflow.com/a/8224117
      *
      * @param array $arrays Source array.
-     * @param array $new Array for modified arrays, by reference.
+     * @param array &$new Array for modified arrays, by reference.
      * @param string $prefix Field prefix; optional.
      * @return void
      */
-    protected function _flattenMultiDimensionalParams($arrays, &$new = array(), $prefix = null)
+    protected function _flattenMultiDimensionalParams($arrays, array &$new = array(), $prefix = null)
     {
         if (is_object($arrays)) {
             $arrays = get_object_vars( $arrays );
