@@ -12,7 +12,7 @@ class Sp_Lib
      *
      * @var string
      */
-    protected $_version = 'php-1.6.0';
+    protected $_version = 'php-1.6.1';
 
     /**
      * Wrapper method to make an api request
