@@ -103,9 +103,10 @@ class Sp_Api extends Sp_Lib
      *
      * @param string $eventName
      * @param integer $brandId Brand ID to create event in; optional.
+     * @param string $eventDate Date of Event (aka "Shoot Date"); optional.
      * @return array
      */
-    public function createEvent($eventName, $brandId = null)
+    public function createEvent($eventName, $brandId = null, $eventDate = null)
     {
         if (is_null($eventName) || $eventName == '') {
             throw new Exception('The eventName is required to create a new event.');
@@ -118,6 +119,10 @@ class Sp_Api extends Sp_Lib
 
         if (strlen($brandId) > 0) {
             $params['brand_id'] = $brandId;
+        }
+
+        if (strlen($eventDate) > 0) {
+            $params['event_date'] = $eventDate;
         }
 
         return $this->_makeApiRequest($params);
