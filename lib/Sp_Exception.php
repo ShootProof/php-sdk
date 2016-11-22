@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Base ShootProof PHP SDK exception.
  *
@@ -26,6 +25,7 @@ class Sp_Exception extends Exception
      */
     public function __construct($msg, $code = 0, $responseBody = null)
     {
+        parent::__construct($msg, $code);
         $this->_responseBody = $responseBody;
     }
 
